@@ -1,12 +1,14 @@
 # React exercise - Internet Programming Course
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-You need to add relevant npm libraries and of course run npm install.
-You are given sample images for the project in the public folder. Feel free to use them or replace them with your own images.
+
 ## Authors
 
-Name and email:
+Name and email:Yaniv Gabay yanivga@edu.hac.ac.il
 
 ## General Information
+
+
+
+
 
 
 

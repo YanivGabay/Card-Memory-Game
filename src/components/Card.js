@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Card({ card }) {
+function Card({ card, onCardClick }) {
   return (
-    <div onClick={() => card.flip()}>
-      {card.isFlipped ? card.image : 'Back of card'}
+    <div className="card" onClick={onCardClick}>
+      {card.isFlipped ? <img src={card.image} alt="card" /> : 'Back of card'}
     </div>
   );
 }
