@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Card from './Card';
 import { shuffleCards, initializeDeck } from '../Utilities';
 
-function Game({ location }) {
+function Game() {
+  const location = useLocation();
   const [cards, setCards] = useState([]);
   const [flips, setFlips] = useState(0);
 
   useEffect(() => {
-    // Ensure that gameSettings are present before trying to use them
     if (location && location.state && location.state.gameSettings) {
-      const { rows, cols } = location.state.gameSettings; // Extract rows and cols from the game settings
+      const { rows, cols } = location.state.gameSettings;
       const deck = initializeDeck(rows, cols);
       setCards(shuffleCards(deck));
     } else {
       console.error("Game settings not found. Ensure you are passing the game settings correctly.");
-      // Optionally, handle the case where game settings are not available
-      // e.g., redirect back to home or display an error message
     }
   }, [location]);
 
