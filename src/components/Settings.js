@@ -1,56 +1,54 @@
 import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+
+function SelectControl({ id, label, value, onChange, options }) {
+  return (
+    <FormControl fullWidth>
+      <InputLabel id={`${id}-label`}>{label}</InputLabel>
+      <Select
+        labelId={`${id}-label`}
+        id={id}
+        value={value}
+        label={label}
+        onChange={onChange}
+      >
+        {options.map((option) => (
+          <MenuItem key={option} value={option}>{option}</MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  );
+}
+
 function Settings({ onChange }) {
   const [rows, setRows] = useState(4);
   const [cols, setCols] = useState(4);
 
   useEffect(() => {
-    // Update the parent component's state whenever rows or columns change.
     onChange({ rows, cols });
   }, [rows, cols, onChange]);
-  
-  const handleChangeRows = (event) => {
-    setRows(parseInt(event.target.value, 10));
-  };
-  const handleChangeCols = (event) => {
-    setCols(parseInt(event.target.value, 10));
-  };
 
   return (
     <Box>
-    <FormControl fullWidth>
-  <InputLabel id="selected-amount-rows">Rows</InputLabel>
-  <Select
-    labelId="selected-amount-rows"
-    id="Rows"
-    value={rows}
-    label="Rows"
-    onChange={handleChangeRows}
-  >
-    <MenuItem value={3}>3</MenuItem>
-    <MenuItem value={4}>4</MenuItem>
-    <MenuItem value={5}>5</MenuItem>
-  </Select>
-  </FormControl>
-  <FormControl fullWidth>
-  <InputLabel id="selected-amount-cols">Cols</InputLabel>
-  <Select
-    labelId="selected-amount-cols"
-    id="cols"
-    value={cols}
-    label="cols"
-    onChange={handleChangeCols}
-  >
-    <MenuItem value={3}>3</MenuItem>
-    <MenuItem value={4}>4</MenuItem>
-    <MenuItem value={5}>5</MenuItem>
-  </Select>
-</FormControl>
-</Box>
+      <SelectControl 
+        id="rows"
+        label="Rows"
+        value={rows}
+        onChange={e => setRows(parseInt(e.target.value, 10))}
+        options={[3, 4, 5]}
+      />
+      <SelectControl 
+        id="cols"
+        label="Columns"
+        value={cols}
+        onChange={e => setCols(parseInt(e.target.value, 10))}
+        options={[3, 4, 5]}
+      />
+    </Box>
   );
 }
 

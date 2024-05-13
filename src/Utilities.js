@@ -10,19 +10,16 @@ export const shuffleCards = (cards) => {
   };
   
   export const initializeDeck = (rows, cols) => {
-    // Assuming half of the total number of cards needed (rows * cols) are unique
     const halfDeckSize = (rows * cols) / 2;
   
-    // Generate card objects with image paths from 0.png to (halfDeckSize-1).png
     const cardImages = Array.from({ length: halfDeckSize }, (_, i) => ({
       id: i + 1,
-      url: `public/images/${i}.png`
+      url: `/images/${i}.jpg`  // Adjusted path
     }));
   
-    // Duplicate and map each card object to include unique identifiers for matching pairs
     const deck = cardImages.concat(cardImages).map((card, index) => ({
       ...card,
-      id: index, // Ensure unique IDs for the deck (necessary for React keys)
+      id: index,
       isFlipped: false,
       isMatched: false
     }));
