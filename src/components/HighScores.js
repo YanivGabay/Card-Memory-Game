@@ -8,6 +8,15 @@ function HighScores() {
     setScores(highScores);
   }, []);
 
+  // Function to add new score
+  const addScore = (newScore) => {
+    const updatedScores = [...scores, newScore];
+    //bigger score = better
+    updatedScores.sort((a, b) => b.score - a.score); 
+    localStorage.setItem('highScores', JSON.stringify(updatedScores));
+    setScores(updatedScores);
+  };
+
   return (
     <div>
       {scores.map((score, index) => (

@@ -14,28 +14,30 @@ export const shuffleCards = (cards) => {
     return cards;
   };
   
-  /**
-   * Initializes the deck for the memory game.
-   * 
-   * @param {number} rows - The number of rows in the game board.
-   * @param {number} cols - The number of columns in the game board.
-   * @returns {Array} - The initialized deck for the memory game.
-   */
-  export const initializeDeck = (rows, cols) => {
-    const halfDeckSize = (rows * cols) / 2;
+/**
+ * Initializes the deck for the memory game.
+ * 
+ * @param {number} rows - The number of rows in the game board.
+ * @param {number} cols - The number of columns in the game board.
+ * @returns {Array} - The initialized deck for the memory game.
+ */
+export const initializeDeck = (rows, cols) => {
+  const halfDeckSize = (rows * cols) / 2;
   
-    const cardImages = Array.from({ length: halfDeckSize }, (_, i) => ({
-      id: i + 1,
-      url: `/images/${i}.jpg`  
-    }));
+  // Create an array of card images where each image appears twice with the same ID
+  const cardImages = [];
+  for (let i = 0; i < halfDeckSize; i++) {
+    const baseCard = {
+      id: i, // Same ID for matching cards
+      url: `/images/${i}.jpg`
+    };
+    cardImages.push(baseCard, {...baseCard}); // Add two instances of the same card
+  }
   
-    const deck = cardImages.concat(cardImages).map((card, index) => ({
-      ...card,
-      id: index,
-      isFlipped: false,
-      isMatched: false
-    }));
-  
-    return deck;
-  };
-  
+  return shuffleCards(cardImages).map((card, index) => ({
+    ...card,
+    isFlipped: false,
+    isMatched: false,
+    index: index  // This helps track the card position in the grid
+  }));
+};
