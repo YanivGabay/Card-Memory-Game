@@ -26,7 +26,7 @@ function Game() {
   return (
     <Grid container spacing={2}>
       {cards.map((card, index) => (
-        <Grid item key={index} xs={3} sm={2} md={1}>
+      <Grid item key={index} xs={4} sm={3} md={3} lg={3} xl={3}>
           <Card card={card} onCardClick={() => handleCardClick(index)} />
         </Grid>
       ))}
