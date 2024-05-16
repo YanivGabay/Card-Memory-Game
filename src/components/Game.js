@@ -8,6 +8,7 @@ function Game() {
   const location = useLocation();
   const navigate = useNavigate();
   const [cards, setCards] = useState([]);
+  const [canFlip, setCanFlip] = useState(true); // State to control card flipping
 
   useEffect(() => {
     const gameSettings = location.state?.gameSettings;
@@ -26,34 +27,31 @@ function Game() {
   }, [location]);
 
   const handleCardClick = index => {
-    if (cards[index].isFlipped || cards[index].isMatched) return;
-    
+    if (!canFlip || cards[index].isFlipped || cards[index].isMatched) return;
+
     const newCards = cards.map((card, idx) =>
       idx === index ? {...card, isFlipped: !card.isFlipped} : card
     );
-
     setCards(newCards);
 
     const flippedCards = newCards.filter(card => card.isFlipped && !card.isMatched);
     if (flippedCards.length === 2) {
-
-      console.log(flippedCards[0].id);
-      console.log(flippedCards[1].id);
+      setCanFlip(false); // Prevent more cards from being flipped
       if (flippedCards[0].id === flippedCards[1].id) {
-        console.log("Matched!");
-    
-
         setCards(newCards.map(card =>
           card.id === flippedCards[0].id ? {...card, isMatched: true} : card
         ));
+        setCanFlip(true);
       } else {
-        // Wait 1 second before flipping non-matched cards back over
         setTimeout(() => {
           setCards(newCards.map(card =>
             card.isFlipped && !card.isMatched ? {...card, isFlipped: false} : card
           ));
+          setCanFlip(true); // Allow flipping again after handling current pair
         }, 1000);
       }
+    } else {
+      setCanFlip(true);
     }
   };
 
