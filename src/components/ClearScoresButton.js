@@ -2,14 +2,18 @@ import React from 'react';
 import { Button } from '@mui/material';
 import { useHighScores } from '../context/HighScoreContext';
 
+
+
 function ClearHighScoresButton() {
-    const { clearScores } = useHighScores();
-    
+    const highScoresContext = useHighScores();
+    console.log(highScoresContext);
+
     return (
-        <Button variant="contained" color="secondary" onClick={clearScores}>
+        <Button variant="contained" color="secondary" onClick={highScoresContext.clearScores}>
             Clear High Scores
         </Button>
     );
 }
+
 
 export default ClearHighScoresButton;

@@ -22,13 +22,13 @@ export const HighScoreProvider = ({ children }) => {
     };
 
     const clearScores = () => {
-        console.log('clearing scores');
+        //console.log('clearing scores');
         localStorage.removeItem('highScores'); // Remove the scores from local storage
         setScores([]); // Reset the scores state to an empty array
     };
 
     return (
-        <HighScoreContext.Provider value={{ scores, addScore }}>
+        <HighScoreContext.Provider value={{ scores, addScore , clearScores }}>
             {children}
         </HighScoreContext.Provider>
     );
