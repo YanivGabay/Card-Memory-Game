@@ -28,13 +28,14 @@ function SelectControl({ id, label, value, onChange, options }) {
 function Settings({ onChange }) {
   const [rows, setRows] = useState(4);
   const [cols, setCols] = useState(4);
+  const [flipDelay, setFlipDelay] = useState(1000);  // Default delay set to 1000 milliseconds
 
   useEffect(() => {
-    onChange({ rows, cols });
-  }, [rows, cols, onChange]);
+    onChange({ rows, cols, flipDelay });
+  }, [rows, cols, flipDelay, onChange]);
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>  
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
       <SelectControl 
         id="rows"
         label="Rows"
@@ -49,8 +50,16 @@ function Settings({ onChange }) {
         onChange={e => setCols(parseInt(e.target.value, 10))}
         options={[3, 4, 5]}
       />
+      <SelectControl
+        id="flipDelay"
+        label="Flip Delay (ms)"
+        value={flipDelay}
+        onChange={e => setFlipDelay(Number(e.target.value))}
+        options={[250, 500, 1000, 1500]}  // Options for different delays
+      />
     </Box>
   );
 }
+
 
 export default Settings;
