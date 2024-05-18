@@ -1,29 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useHighScores } from '../context/HighScoreContext';
+import { Typography, List, ListItem, ListItemText, Paper, Container } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import ReturnHome from './ReturnHome';
 
 function HighScores() {
-  const [scores, setScores] = useState([]);
-
-  useEffect(() => {
-    const highScores = JSON.parse(localStorage.getItem('highScores') || '[]');
-    setScores(highScores);
-  }, []);
-
-  // Function to add new score
-  const addScore = (newScore) => {
-    const updatedScores = [...scores, newScore];
-    //bigger score = better
-    updatedScores.sort((a, b) => b.score - a.score); 
-    localStorage.setItem('highScores', JSON.stringify(updatedScores));
-    setScores(updatedScores);
-  };
-
-  return (
-    <div>
-      {scores.map((score, index) => (
-        <div key={index}>{score.name}: {score.score}</div>
-      ))}
-    </div>
-  );
+    const { scores } = useHighScores();
+  
+    return (
+        <Container maxWidth="sm" style={{ marginTop: '20px' }}>
+            <Typography variant="h4" component="h1" gutterBottom align="center">
+                High Scores
+            </Typography>
+            <Paper style={{ maxHeight: 400, overflow: 'auto', marginBottom: '20px' }}>
+                {scores.length > 0 ? (
+                    <List>
+                        {scores.map((score, index) => (
+                            <ListItem key={index} divider>
+                                <ListItemText primary={`${score.name}: ${score.score}`} />
+                            </ListItem>
+                        ))}
+                    </List>
+                ) : (
+                    <Typography variant="subtitle1" align="center" style={{ padding: '20px' }}>
+                        No high scores yet. Play a game to set a new record!
+                    </Typography>
+                )}
+            </Paper>
+            <ReturnHome />
+        </Container>
+    );
 }
 
 export default HighScores;

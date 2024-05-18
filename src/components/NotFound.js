@@ -1,12 +1,19 @@
 import React from 'react';
+import { Typography, Container } from '@mui/material';
+import BackToHomeButton from './ReturnHome';  // Ensure to import the component
 
 function NotFound() {
-  return (
-    <div>
-      <h2>Page Not Found</h2>
-      <p>The requested page is not available. Please check the URL or return to the homepage.</p>
-    </div>
-  );
+    return (
+        <Container maxWidth="sm" style={{ marginTop: '20px', textAlign: 'center' }}>
+            <Typography variant="h4" gutterBottom>
+                Page Not Found
+            </Typography>
+            <Typography variant="subtitle1">
+                We couldn't find what you were looking for.
+            </Typography>
+            <BackToHomeButton /> 
+        </Container>
+    );
 }
 
 export default NotFound;

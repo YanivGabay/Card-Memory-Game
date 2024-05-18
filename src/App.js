@@ -4,6 +4,8 @@ import Home from './components/Home';
 import Game from './components/Game';
 import HighScores from './components/HighScores';
 import NotFound from './components/NotFound';
+import { HighScoreProvider } from './context/HighScoreContext';
+
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -11,6 +13,7 @@ import '@fontsource/roboto/700.css';
 
 function App() {
   return (
+    <HighScoreProvider>
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -20,6 +23,7 @@ function App() {
         <Route path="*" element={<NotFound />} />  {/* Catch-all for any undefined routes */}
       </Routes>
     </Router>
+    </HighScoreProvider>
   );
 }
 

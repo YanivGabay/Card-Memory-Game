@@ -1,32 +1,19 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import Settings from './Settings';  // Ensure Settings component can be used within a Modal
 import Alert from '@mui/material/Alert';
 
+
+import { Box, Button, TextField,Stack } from '@mui/material';
+import SpringModal from './SpringModal';
+
+
 function Home() {
   const [name, setName] = useState('');
-  const [openModal, setOpenModal] = useState(false);
+ 
   const [gameSettings, setGameSettings] = useState({ rows: 4, cols: 4 });
   const [errors, setErrors] = useState({ name: '', settings: '' });
   const navigate = useNavigate();
-
-  const handleOpen = () => setOpenModal(true);
-  const handleClose = () => setOpenModal(false);
-
-  const startGame = () => {
-    const nameError = validateName(name);
-    const settingsError = validateSettings(gameSettings);
-    if (!nameError && !settingsError) {
-      navigate('/game', { state: { name, gameSettings } });
-    } else {
-      setErrors({ name: nameError, settings: settingsError });
-    }
-  };
 
   const validateName = (name) => {
     if (!name) return 'Name is required.';
@@ -39,6 +26,18 @@ function Home() {
     return totalCards % 2 !== 0 ? 'The combination of rows and columns must result in an even number of cards.' : null;
   };
 
+  const startGame = () => {
+    const nameError = validateName(name);
+    const settingsError = validateSettings(gameSettings);
+    if (!nameError && !settingsError) {
+      navigate('/game', { state: { name, gameSettings } });
+    } else {
+      setErrors({ name: nameError, settings: settingsError });
+    }
+  };
+
+ 
+
   return (
     <Box sx={{ p: 2 }}>
       <TextField
@@ -49,27 +48,15 @@ function Home() {
         error={!!errors.name}
         helperText={errors.name || ' '}
       />
-      
- 
+
       <Settings onChange={setGameSettings} />
-      <Button variant="outlined" onClick={startGame}>Start Game</Button>
-      <Button variant="outlined" onClick={handleOpen}>High Scores</Button>
-      <Modal
-        open={openModal}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            High Scores
-          </Typography>
 
+      <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+        <Button variant="outlined" onClick={startGame}>Start Game</Button>
+        <SpringModal />
+      </Stack>
 
-        </Box>
-      </Modal>
-
-      {errors.settings && <Alert  severity="error">{errors.settings}</Alert >}
+      {errors.settings && <Alert severity="error">{errors.settings}</Alert>}
     </Box>
   );
 }

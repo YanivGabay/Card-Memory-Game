@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Card from './Card';
 import { shuffleCards, initializeDeck } from '../Utilities';
 import Grid from '@mui/material/Grid';
-
+import { useHighScores } from '../context/HighScoreContext';
 
 function Game() {
   const location = useLocation();
@@ -13,8 +13,8 @@ function Game() {
   const [canFlip, setCanFlip] = useState(true);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(false);
-
-  useEffect(() => initializeGame(), [location]);
+  const { addScore } = useHighScores();
+  
 
   const initializeGame = () => {
     const gameSettings = location.state?.gameSettings;
@@ -75,14 +75,28 @@ function Game() {
     }
   };
 
+
+  const handleGameComplete = (finalScore) => {
+    const newScore = { name: 'Player Name', score: finalScore }; // Customize as necessary
+    addScore(newScore);
+    navigate('/highscores');
+  };
+
+  useEffect(() => initializeGame(), [location]);
+  
   useEffect(() => {
     if (cards.length === 0) return;
     if (cards.every(card => card.isMatched)) {
       console.log("All cards matched, navigating to highscores.");
+      handleGameComplete(score);
       setGameOver(true);
       setTimeout(() => navigate('/highscores'), 2000);
     }
   }, [cards, navigate]);
+
+ 
+
+
 
   return (
     <Grid container spacing={2}>
