@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHighScores } from '../context/HighScoreContext';
 import { Typography, List, ListItem, ListItemText, Paper, Container } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+
 import ReturnHome from './ReturnHome';
 
 function HighScores() {

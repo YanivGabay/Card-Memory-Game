@@ -1,30 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Settings from './Settings';  // Ensure Settings component can be used within a Modal
+import Settings from './Settings';
 import Alert from '@mui/material/Alert';
-
-
-import { Box, Button, TextField,Stack } from '@mui/material';
+import { Box, Button, TextField, Grid, Paper } from '@mui/material';
 import SpringModal from './SpringModal';
-
+import Header from './Header'; // Import the Header component
+import { validateName, validateSettings } from '../Utilities';
+import Stack from '@mui/material/Stack';
 
 function Home() {
   const [name, setName] = useState('');
- 
   const [gameSettings, setGameSettings] = useState({ rows: 4, cols: 4 });
-  const [errors, setErrors] = useState({ name: '', settings: '' });
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-
-  const validateName = (name) => {
-    if (!name) return 'Name is required.';
-    if (name.length > 12 || !/^[a-zA-Z0-9]*$/.test(name)) return 'Name must be up to 12 alphanumeric english characters.';
-    return null;
-  };
-
-  const validateSettings = ({ rows, cols }) => {
-    const totalCards = rows * cols;
-    return totalCards % 2 !== 0 ? 'The combination of rows and columns must result in an even number of cards.' : null;
-  };
 
   const startGame = () => {
     const nameError = validateName(name);
@@ -36,27 +24,29 @@ function Home() {
     }
   };
 
- 
-
   return (
-    <Box sx={{ p: 2 }}>
-      <TextField
-        fullWidth
-        value={name}
-        onChange={(e) => setName(e.target.value.trim())}
-        placeholder="Enter your name"
-        error={!!errors.name}
-        helperText={errors.name || ' '}
-      />
-
-      <Settings onChange={setGameSettings} />
-
-      <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-        <Button variant="outlined" onClick={startGame}>Start Game</Button>
-        <SpringModal />
-      </Stack>
-
-      {errors.settings && <Alert severity="error">{errors.settings}</Alert>}
+    <Box sx={{ flexGrow: 1 }}>
+      <Header />
+      <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ mt: 2, p: 2 }}>
+        <Grid item xs={12} md={6}>
+          <Paper sx={{ p: 2 }}>
+            <TextField
+              fullWidth
+              label="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value.trim())}
+              error={!!errors.name}
+              helperText={errors.name || ' '}
+            />
+            <Settings onChange={setGameSettings} />
+            <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+              <Button variant="outlined" onClick={startGame}>Start Game</Button>
+              <SpringModal />
+            </Stack>
+            {errors.settings && <Alert severity="error">{errors.settings}</Alert>}
+          </Paper>
+        </Grid>
+      </Grid>
     </Box>
   );
 }

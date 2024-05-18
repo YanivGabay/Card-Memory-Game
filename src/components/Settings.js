@@ -5,6 +5,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 
+
 function SelectControl({ id, label, value, onChange, options }) {
   return (
     <FormControl fullWidth>
@@ -33,7 +34,7 @@ function Settings({ onChange }) {
   }, [rows, cols, onChange]);
 
   return (
-    <Box>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>  
       <SelectControl 
         id="rows"
         label="Rows"
