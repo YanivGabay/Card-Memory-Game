@@ -8,7 +8,7 @@ import { useHighScores } from '../context/HighScoreContext';
 function Game() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { rows, cols, flipDelay = 1000 } = location.state?.gameSettings || { rows: 4, cols: 4, flipDelay: 1000 };  
+  const { name,rows, cols, flipDelay = 1000 } = location.state?.gameSettings || { rows: 4, cols: 4, flipDelay: 1000 };  
   const [cards, setCards] = useState([]);
   const [canFlip, setCanFlip] = useState(true);
   const [score, setScore] = useState(0);
@@ -55,16 +55,16 @@ function Game() {
   useEffect(() => {
     if (cards.length === 0) return;
   
-    const handleGameComplete = (finalScore) => {
-      addScore({ name: 'Player Name', score: finalScore });
+    const handleGameComplete = (finalScore,name) => {
+      addScore({ name: name, score: finalScore });
       setGameOver(true);
       setTimeout(() => navigate('/highscores'), 2000);
     };
   
     if (cards.every(card => card.isMatched)) {
-      handleGameComplete(score);
+      handleGameComplete(name,score);
     }
-  }, [cards, score, addScore, navigate]); // Dependencies updated
+  }, [cards, score, name , addScore, navigate]); // Dependencies updated
   
   
 

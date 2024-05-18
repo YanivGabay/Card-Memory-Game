@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useSpring, animated } from '@react-spring/web';
 import { useHighScores } from '../context/HighScoreContext';
+import ClearScoresButton from './ClearScoresButton';
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
@@ -61,25 +62,30 @@ export default function SpringModal() {
   const { scores } = useHighScores();
   return (
     <div>
-      <Button variant="outlined" onClick={handleOpen}>High Scores</Button>
-      <Modal
-        aria-labelledby="spring-modal-title"
-        aria-describedby="spring-modal-description"
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            TransitionComponent: Fade,
-          },
-        }}
-      >
-        <Fade in={open}>
-        <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4 }}>
+    <Button variant="outlined" onClick={handleOpen}>High Scores</Button>
+    <Modal
+      aria-labelledby="spring-modal-title"
+      aria-describedby="spring-modal-description"
+      open={open}
+      onClose={handleClose}
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          TransitionComponent: Fade,
+        },
+      }}
+    >
+      <Fade in={open}>
+        <Box sx={{
+          position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+          width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4,
+          maxHeight: '80vh', overflowY: 'auto'  // Adjust maxHeight to control the modal height and overflowY for scrolling
+        }}>
           <Typography id="high-scores-modal" variant="h6" component="h2">
             High Scores
           </Typography>
+          <ClearScoresButton />
           <List dense>
             {scores.length > 0 ? scores.map((score, index) => (
               <ListItem key={index}>
@@ -87,9 +93,10 @@ export default function SpringModal() {
               </ListItem>
             )) : <ListItem><ListItemText primary="No high scores yet." /></ListItem>}
           </List>
-          </Box>
-        </Fade>
-      </Modal>
-    </div>
+        </Box>
+      </Fade>
+    </Modal>
+  </div>
+
   );
 }
