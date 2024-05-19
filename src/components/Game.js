@@ -4,6 +4,7 @@ import Card from './Card';
 import { shuffleCards, initializeDeck } from '../Utilities';
 import Grid from '@mui/material/Grid';
 import { useHighScores } from '../context/HighScoreContext';
+import GameFinished from './GameFinished';
 
 function Game() {
   const location = useLocation();
@@ -53,19 +54,20 @@ function Game() {
     }
   };
   useEffect(() => {
-    if (cards.length === 0) return;
+    if (cards.length === 0 || gameOver) return;
   
-    const handleGameComplete = (finalScore,name) => {
-      addScore({ name: name, score: finalScore });
-      setGameOver(true);
-      setTimeout(() => navigate('/highscores'), 2000);
+    const handleGameComplete = () => {
+      if (cards.every(card => card.isMatched)) {
+        addScore({ name: name, score: score }); // Ensure this function doesn't add duplicates
+        setGameOver(true); // Mark the game as over
+        setTimeout(() => {
+          navigate('/highscores');
+        }, 2000); // Navigate after a delay to show the game over screen or a message
+      }
     };
   
-    if (cards.every(card => card.isMatched)) {
-      handleGameComplete(name,score);
-    }
-  }, [cards, score, name , addScore, navigate]); // Dependencies updated
-  
+    handleGameComplete();
+  }, [cards, score, addScore, navigate, gameOver, name]); // Dependency array
   
 
 
@@ -77,7 +79,8 @@ function Game() {
           <Card card={card} onCardClick={() => handleCardClick(index)} />
         </Grid>
       ))}
-      {gameOver && <div>Game Over! Your score: {score}</div>}
+   
+     {gameOver && <GameFinished score={score} />}
     </Grid>
   );
 }

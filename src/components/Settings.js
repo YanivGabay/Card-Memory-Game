@@ -41,14 +41,14 @@ function Settings({ onChange }) {
         label="Rows"
         value={rows}
         onChange={e => setRows(parseInt(e.target.value, 10))}
-        options={[3, 4, 5]}
+        options={[2, 3, 4, 5]}
       />
       <SelectControl 
         id="cols"
         label="Columns"
         value={cols}
         onChange={e => setCols(parseInt(e.target.value, 10))}
-        options={[3, 4, 5]}
+        options={[2 ,3, 4, 5]}
       />
       <SelectControl
         id="flipDelay"

@@ -18,7 +18,16 @@ function Home() {
     const nameError = validateName(name);
     const settingsError = validateSettings(gameSettings);
     if (!nameError && !settingsError) {
-      navigate('/game', { state: { name, gameSettings } });
+      navigate('/game', {
+        state: {
+          gameSettings: {
+            name: name,
+            rows: gameSettings.rows,
+            cols: gameSettings.cols,
+            flipDelay: gameSettings.flipDelay 
+          }
+        }
+      });
     } else {
       setErrors({ name: nameError, settings: settingsError });
     }
