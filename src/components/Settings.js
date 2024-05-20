@@ -7,17 +7,15 @@ import MenuItem from '@mui/material/MenuItem';
 import { TextField } from '@mui/material';
 
 
-function SelectControl({ id, label, value, onChange, options,name }) {
+function SelectControl({ id, label,options,...props }) {
   return (
     <FormControl fullWidth>
       <InputLabel id={`${id}-label`}>{label}</InputLabel>
       <Select
         labelId={`${id}-label`}
         id={id}
-        value={value}
         label={label}
-        onChange={onChange}
-        name={name}
+        {...props}
        
       >
         {options.map((option) => (
