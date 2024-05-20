@@ -6,6 +6,7 @@ import Grid from '@mui/material/Grid';
 import { useHighScores } from '../context/HighScoreContext';
 import GameFinished from './GameFinished';
 import { isEveryCardMatched } from '../Utilities';
+import { Box, Typography } from '@mui/material';
 
 
 function Game({gameSettings}) {
@@ -16,7 +17,7 @@ function Game({gameSettings}) {
   const [cards, setCards] = useState(initializeDeck(rows, cols));
   const [canFlip, setCanFlip] = useState(true);
   const [score, setScore] = useState(0);
-
+  const [steps,setSteps] = useState(0);
   const { addScore } = useHighScores();
 
   const gameOver = isEveryCardMatched(cards);
@@ -35,13 +36,14 @@ function Game({gameSettings}) {
 
   const handleCardClick = index => {
     if (!canFlip || cards[index].isFlipped || cards[index].isMatched) return;
+    setSteps(steps+1)
     const newCards = cards.map((card, idx) => idx === index ? { ...card, isFlipped: true } : card);
     setCards(newCards);
     processCardMatch(newCards);
 
 
   };
-
+ 
   const processCardMatch = (newCards) => {
     const flippedCards = newCards.filter(card => card.isFlipped && !card.isMatched);
     if (flippedCards.length === 2) {
@@ -74,6 +76,13 @@ function Game({gameSettings}) {
 
 
   return (
+
+    <Box>
+      <Typography variant="h5" align="center" gutterBottom>
+        {`Player: ${name} | Score: ${score} | Steps: ${steps}`}
+      </Typography>
+    
+
     <Grid container spacing={2}>
       {cards.map((card, index) => (
         <Grid item key={index} xs={4} sm={3} md={3} lg={3} xl={3}>
@@ -83,6 +92,7 @@ function Game({gameSettings}) {
 
       {gameOver && <GameFinished score={score} />}
     </Grid>
+    </Box>
   );
 }
 
