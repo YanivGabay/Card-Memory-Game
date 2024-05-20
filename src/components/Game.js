@@ -8,10 +8,10 @@ import GameFinished from './GameFinished';
 import { isEveryCardMatched } from '../Utilities';
 
 
-function Game() {
-  const location = useLocation();
+function Game({gameSettings}) {
+  const { name, rows, cols, flipDelay } = gameSettings;
+
   const navigate = useNavigate();
-  const { name, rows, cols, flipDelay = 1000 } = location.state?.gameSettings || { name: 'default', rows: 4, cols: 4, flipDelay: 1000 };
   //init deck returns a shuffled cards
   const [cards, setCards] = useState(initializeDeck(rows, cols));
   const [canFlip, setCanFlip] = useState(true);

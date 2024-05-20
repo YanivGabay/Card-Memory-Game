@@ -18,7 +18,7 @@ function Home() {
     const nameError = validateName(name);
     const settingsError = validateSettings(gameSettings);
     if (!nameError && !settingsError) {
-      navigate('/game', {
+      navigate('/gamecontroller', {
         state: {
           gameSettings: {
             name: name,
