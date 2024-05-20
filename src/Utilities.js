@@ -54,3 +54,10 @@ export const initializeDeck = (rows, cols) => {
     index: index  // This helps track the card position in the grid
   }));
 };
+
+
+export const isEveryCardMatched = (cards) => {
+  console.log(cards)
+  console.log(cards.every(card => card.isMatched))
+  return cards.every(card => card.isMatched);
+};
