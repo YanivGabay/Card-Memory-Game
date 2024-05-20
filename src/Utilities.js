@@ -1,16 +1,16 @@
 
 
-
+export const validateBoard = ({ rows, cols }) => {
+  const totalCards = rows * cols;
+  return totalCards % 2 !== 0 ? 'The combination of rows and columns must result in an even number of cards.' : null;
+};
 export const validateName = (name) => {
   if (!name) return 'Name is required.';
   if (name.length > 12 || !/^[a-zA-Z0-9]*$/.test(name)) return 'Name must be up to 12 alphanumeric english characters.';
   return null;
 };
 
-export const validateSettings = ({ rows, cols }) => {
-  const totalCards = rows * cols;
-  return totalCards % 2 !== 0 ? 'The combination of rows and columns must result in an even number of cards.' : null;
-};
+
 
 /**
  * Shuffles an array of cards using the Fisher-Yates algorithm.

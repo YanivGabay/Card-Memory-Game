@@ -4,9 +4,10 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import { TextField } from '@mui/material';
 
 
-function SelectControl({ id, label, value, onChange, options }) {
+function SelectControl({ id, label, value, onChange, options,name }) {
   return (
     <FormControl fullWidth>
       <InputLabel id={`${id}-label`}>{label}</InputLabel>
@@ -16,45 +17,55 @@ function SelectControl({ id, label, value, onChange, options }) {
         value={value}
         label={label}
         onChange={onChange}
+        name={name}
+       
       >
         {options.map((option) => (
           <MenuItem key={option} value={option}>{option}</MenuItem>
         ))}
+        
       </Select>
     </FormControl>
   );
 }
 
-function Settings({ onChange }) {
-  const [rows, setRows] = useState(4);
-  const [cols, setCols] = useState(4);
-  const [flipDelay, setFlipDelay] = useState(1000);  // Default delay set to 1000 milliseconds
-
-  useEffect(() => {
-    onChange({ rows, cols, flipDelay });
-  }, [rows, cols, flipDelay, onChange]);
+function Settings({ gameSettings, handleChange ,errors}) {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-      <SelectControl 
+
+      <TextField
+        fullWidth
+        label="Enter your name"
+        name="name"
+        value={gameSettings.name || ''}
+        onChange={handleChange}
+        error={!!errors.name}
+        helperText={errors.name || ' '}
+      />
+
+      <SelectControl
         id="rows"
         label="Rows"
-        value={rows}
-        onChange={e => setRows(parseInt(e.target.value, 10))}
+        name="rows"
+        value={gameSettings.rows}
+        onChange={handleChange}
         options={[2, 3, 4, 5]}
       />
-      <SelectControl 
+      <SelectControl
         id="cols"
         label="Columns"
-        value={cols}
-        onChange={e => setCols(parseInt(e.target.value, 10))}
-        options={[2 ,3, 4, 5]}
+        name="cols"
+        value={gameSettings.cols}
+        onChange={handleChange}
+        options={[2, 3, 4, 5]}
       />
       <SelectControl
         id="flipDelay"
         label="Flip Delay (ms)"
-        value={flipDelay}
-        onChange={e => setFlipDelay(Number(e.target.value))}
+        name="flipDelay"
+        value={gameSettings.flipDelay}
+        onChange={handleChange}
         options={[250, 500, 1000, 1500]}  // Options for different delays
       />
     </Box>

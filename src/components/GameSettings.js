@@ -4,57 +4,64 @@ import { Alert } from '@mui/material'
 import Settings from './Settings'
 import SpringModal from './SpringModal'
 import { useNavigate } from 'react-router-dom'
-import { validateName, validateSettings } from '../Utilities'
+import { validateBoard, validateName } from '../Utilities'
 
 const GameSettings = () => {
 
 
-    const [name, setName] = useState('');
-    const [gameSettings, setGameSettings] = useState({ rows: 4, cols: 4 });
+
+    const [gameSettings, setGameSettings] = useState({ rows: 4, cols: 4, flipDelay: 1000 });
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
-  
-    const startGame = () => {
-      const nameError = validateName(name);
-      const settingsError = validateSettings(gameSettings);
-      if (!nameError && !settingsError) {
-        navigate('/game', {
-          state: {
-            gameSettings: {
-              name: name,
-              rows: gameSettings.rows,
-              cols: gameSettings.cols,
-              flipDelay: gameSettings.flipDelay 
-            }
-          }
-        });
-      } else {
-        setErrors({ name: nameError, settings: settingsError });
-      }
+
+    const handleGameSettingsChange = (e) => {
+
+       
+        
+        let value = e.target.value;
+        if (e.target.name !== 'name') {
+            value = parseInt(value, 10);
+        }
+        else { value = value.trim() };
+        console.log(e.target.value);
+        console.log(e.target.name);
+        console.log(value);
+        setGameSettings({ ...gameSettings, [e.target.name]: value });
     };
 
-  return (
-    <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ mt: 2, p: 2 }}>
-        <Grid item xs={12} md={6}>
-          <Paper sx={{ p: 2 }}>
-            <TextField
-              fullWidth
-              label="Enter your name"
-              value={name}
-              onChange={(e) => setName(e.target.value.trim())}
-              error={!!errors.name}
-              helperText={errors.name || ' '}
-            />
-            <Settings onChange={setGameSettings} />
-            <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-              <Button variant="outlined" onClick={startGame}>Start Game</Button>
-              <SpringModal />
-            </Stack>
-            {errors.settings && <Alert severity="error">{errors.settings}</Alert>}
-          </Paper>
+    const startGame = () => {
+        const nameError = validateName(gameSettings.name);
+        const settingsError = validateBoard(gameSettings);
+        if (!nameError && !settingsError) {
+            navigate('/game', {
+                state: {
+                    gameSettings: {
+                        name: gameSettings.name,
+                        rows: gameSettings.rows,
+                        cols: gameSettings.cols,
+                        flipDelay: gameSettings.flipDelay
+                    }
+                }
+            });
+        } else {
+            setErrors({ name: nameError, settings: settingsError });
+        }
+    };
+
+    return (
+        <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{ mt: 2, p: 2 }}>
+            <Grid item xs={12} md={6}>
+                <Paper sx={{ p: 2 }}>
+                    <Settings errors={errors} gameSettings={gameSettings} handleChange={handleGameSettingsChange} />
+                    <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
+                        <Button variant="outlined" onClick={startGame}>Start Game</Button>
+                        <SpringModal />
+                    </Stack>
+                    {errors.settings && <Alert severity="error">{errors.settings}</Alert>}
+                </Paper>
+            </Grid>
         </Grid>
-      </Grid>
-  )
+    )
 }
 
 export default GameSettings
