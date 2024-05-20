@@ -10,9 +10,6 @@ export default function GameFinished({ score }) {
           <Typography variant="h3" component="h1" gutterBottom>
             Game Over! Your score: {score}
           </Typography>
-          <Button variant="contained" color="primary" startIcon={<RestartAltIcon />}>
-            Restart Game
-          </Button>
         </Paper>
       </Grid>
     </Grid>

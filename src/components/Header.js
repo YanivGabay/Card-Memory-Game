@@ -15,10 +15,13 @@ function Header() {
             <Toolbar>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Memory Game App
+
                 </Typography>
                 <Button onClick={goHome} color="inherit">Home</Button>
+                
             </Toolbar>
         </AppBar>
+        
     );
 }
 

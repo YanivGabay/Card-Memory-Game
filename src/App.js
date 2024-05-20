@@ -10,20 +10,26 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
- //<Route path="/game" element={<Game />} />
+import Header from './components/Header';
+import GameSettings from './components/GameSettings';
+
+
 function App() {
   return (
     <HighScoreProvider>
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-      
-        <Route path="/highscores" element={<HighScores />} />
-        <Route path="/game" element ={<GameController />} />
-        <Route path="/notfound" element={<NotFound />} />
-        <Route path="*" element={<NotFound />} />  {/* Catch-all for any undefined routes */}
-      </Routes>
-    </Router>
+
+      <Router>
+        <Home>
+          <Routes>
+            <Route path="/" element={<GameSettings />} />
+            <Route path="/highscores" element={<HighScores />} />
+            <Route path="/game" element={<GameController />} />
+            <Route path="/notfound" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />  {/* Catch-all for any undefined routes */}
+          </Routes>
+        </Home>
+      </Router>
+
     </HighScoreProvider>
   );
 }
