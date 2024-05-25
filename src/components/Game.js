@@ -7,7 +7,7 @@ import { useHighScores } from '../context/HighScoreContext';
 import GameFinished from './GameFinished';
 import { isEveryCardMatched } from '../Utilities';
 import { Box, Typography } from '@mui/material';
-
+import ReturnHome from './ReturnHome';
 
 /**
  * Represents the memory game component.
@@ -117,7 +117,7 @@ function Game({ gameSettings }) {
 
         {gameOver && <GameFinished score={score} />}
       </Grid>
-
+      <ReturnHome />
     </Box>
   );
 }
