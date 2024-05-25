@@ -3,14 +3,10 @@ import PropTypes from 'prop-types';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import { useSpring, animated } from '@react-spring/web';
 import { useHighScores } from '../context/HighScoreContext';
-import ClearScoresButton from './ClearScoresButton';
+import HighScoresTable from './HighScoresTable';
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const {
@@ -82,17 +78,8 @@ export default function SpringModal() {
           width: 400, bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4,
           maxHeight: '80vh', overflowY: 'auto'  // Adjust maxHeight to control the modal height and overflowY for scrolling
         }}>
-          <Typography id="high-scores-modal" variant="h6" component="h2">
-            High Scores
-          </Typography>
-          <ClearScoresButton />
-          <List dense>
-            {scores.length > 0 ? scores.map((score, index) => (
-              <ListItem key={index}>
-                <ListItemText primary={`${score.name}: ${score.score}`} />
-              </ListItem>
-            )) : <ListItem><ListItemText primary="No high scores yet." /></ListItem>}
-          </List>
+          <HighScoresTable scores={scores} />
+        
         </Box>
       </Fade>
     </Modal>
