@@ -2,33 +2,26 @@
 
 ## Authors
 
-Name and email:Yaniv Gabay yanivga@edu.hac.ac.il
+Yaniv Gabay
 
-## General Information
-
-
+<yanivga@edu.hac.ac.il>
 
 
 
+### Shuffle Algorithm
+
+Shuffles an array of cards using the Fisher-Yates algorithm.
 
 
+### Score
 
+The game's scoring system rewards players for efficiency and skill in managing increasingly complex challenges:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Base Score: Calculated as 10 times the number of cards, rewarding larger board sizes.
+Complexity Bonus: Adds 0.5 times the number of cards, incentivizing players to tackle larger boards.
+Flip Delay Bonus: Awards players for faster gameplay with a bonus calculated as 50 divided by the flip delay.
+Step Penalty: Deducts 2 points for each move made to encourage efficient gameplay.
+The final score is the sum of the base score, bonuses, and penalties, adjusted for game difficulty and player efficiency.
 
 
 
