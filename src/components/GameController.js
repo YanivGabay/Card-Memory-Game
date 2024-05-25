@@ -1,6 +1,5 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom'
 import Game from './Game'
 import { Navigate } from 'react-router-dom'
 

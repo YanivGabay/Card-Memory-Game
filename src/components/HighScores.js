@@ -1,32 +1,40 @@
 import React from 'react';
 import { useHighScores } from '../context/HighScoreContext';
-import { Typography, List, ListItem, ListItemText, Paper, Container } from '@mui/material';
-
+import {  Paper, Container } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import ReturnHome from './ReturnHome';
 
 function HighScores() {
     const { scores } = useHighScores();
-  
+
     return (
         <Container maxWidth="sm" style={{ marginTop: '20px' }}>
-            <Typography variant="h4" component="h1" gutterBottom align="center">
-                High Scores
-            </Typography>
-            <Paper style={{ maxHeight: 400, overflow: 'auto', marginBottom: '20px' }}>
-                {scores.length > 0 ? (
-                    <List>
-                        {scores.map((score, index) => (
-                            <ListItem key={index} divider>
-                                <ListItemText primary={`${score.name}: ${score.score}`} />
-                            </ListItem>
+
+            <TableContainer component={Paper}>
+                <Table aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Rank</TableCell>
+                            <TableCell align="right">Name</TableCell>
+                            <TableCell align="right">Score</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {scores.map((row, index) => (
+                            <TableRow key={row.name}>
+                                <TableCell component="th" scope="row">
+                                    {index + 1}
+                                </TableCell>
+                                <TableCell align="right">{row.name}</TableCell>
+                                <TableCell align="right">{row.score}</TableCell>
+                            </TableRow>
                         ))}
-                    </List>
-                ) : (
-                    <Typography variant="subtitle1" align="center" style={{ padding: '20px' }}>
-                        No high scores yet. Play a game to set a new record!
-                    </Typography>
-                )}
-            </Paper>
+                    </TableBody>
+                </Table>
+            </TableContainer>
+
+
+
             <ReturnHome />
         </Container>
     );

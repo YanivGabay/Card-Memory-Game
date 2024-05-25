@@ -16,10 +16,29 @@ export const HighScoreProvider = ({ children }) => {
     }, []);
 
     const addScore = (newScore) => {
-        const updatedScores = [...scores, newScore].sort((a, b) => b.score - a.score);
+        let found = false;
+        const updatedScores = scores.map(score => {
+            if (score.name === newScore.name) {
+                found = true;
+                // Update the score only if the new score is higher
+                return newScore.score > score.score ? newScore : score;
+            }
+            return score;
+        });
+    
+        // If the player's name was not found in the existing list, add the new score
+        if (!found) {
+            updatedScores.push(newScore);
+        }
+    
+        // Sort the scores in descending order based on score
+        updatedScores.sort((a, b) => b.score - a.score);
+    
+        // Update local storage and state
         localStorage.setItem('highScores', JSON.stringify(updatedScores));
         setScores(updatedScores);
     };
+    
 
     const clearScores = () => {
         //console.log('clearing scores');
