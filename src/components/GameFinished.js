@@ -1,8 +1,17 @@
 import React from 'react';
-import { Typography, Grid, Paper, Button } from '@mui/material';
-import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import { Typography, Grid, Paper } from '@mui/material';
 
 
+/**
+ * Game finished compononet, displays the final score of the game (when the game is over).
+ *
+
+ * @param {number}  score - The score After calculation.
+
+ * @returns {JSX.Element} The rendered game component.
+ *
+
+ */
 
 
 export default function GameFinished({ score }) {

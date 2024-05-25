@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
-import Game from './components/Game';
+
 import HighScores from './components/HighScores';
 import NotFound from './components/NotFound';
 import { HighScoreProvider } from './context/HighScoreContext';
@@ -10,10 +10,14 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import Header from './components/Header';
+
 import GameSettings from './components/GameSettings';
 
 
+/**
+ * The main component of the application.
+ * @returns {JSX.Element} The rendered App component.
+ */
 function App() {
   return (
     <HighScoreProvider>

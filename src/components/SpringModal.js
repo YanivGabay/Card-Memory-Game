@@ -51,6 +51,12 @@ Fade.propTypes = {
 
 
 
+/**
+ * Renders a SpringModal component.
+ * Taken and modified from the Material-UI Modal examples.
+ * @returns {JSX.Element} The rendered SpringModal component.
+ */
+
 export default function SpringModal() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);

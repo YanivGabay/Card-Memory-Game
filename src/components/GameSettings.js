@@ -30,20 +30,24 @@ const GameSettings = () => {
     const startGame = () => {
         const nameError = validateName(gameSettings.name);
         const settingsError = validateBoard(gameSettings);
-        if (!nameError && !settingsError) {
-            navigate('/game', {
-                state: {
-                    gameSettings: {
-                        name: gameSettings.name,
-                        rows: gameSettings.rows,
-                        cols: gameSettings.cols,
-                        flipDelay: gameSettings.flipDelay
-                    }
-                }
-            });
-        } else {
+
+        if (nameError || settingsError) {
             setErrors({ name: nameError, settings: settingsError });
+            return;
         }
+
+        navigate('/game', {
+            state: {
+                gameSettings: {
+                    name: gameSettings.name,
+                    rows: gameSettings.rows,
+                    cols: gameSettings.cols,
+                    flipDelay: gameSettings.flipDelay
+                }
+            }
+        });
+
+       
     };
 
     return (

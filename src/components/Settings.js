@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
@@ -6,7 +6,15 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { TextField } from '@mui/material';
 
-
+/**
+ * Renders a reusable select input control with full width.
+ *
+ * @param {string} id - The id for the select input.
+ * @param {string} label - The label for the select input.
+ * @param {Array} options - Array of options for the select dropdown.
+ * @param {Object} props - Additional props to pass to the Select component.
+ * @returns {JSX.Element} A Material-UI FormControl component with a Select input.
+ */
 function SelectControl({ id, label,options,...props }) {
   return (
     <FormControl fullWidth>
@@ -27,6 +35,17 @@ function SelectControl({ id, label,options,...props }) {
   );
 }
 
+
+/**
+ * Renders the settings form.
+ * 
+ * @param {Object} props - The component props.
+ * @param {Object} props.gameSettings - The game settings object.
+ * @param {Function} props.handleChange - The change handler function.
+ * @param {Object} props.errors - The form errors object.
+ * @returns {JSX.Element} The rendered settings form.
+ *  
+ * */
 function Settings({ gameSettings, handleChange ,errors}) {
 
   return (

@@ -2,6 +2,15 @@ import React from 'react';
 import { Typography, Container } from '@mui/material';
 import BackToHomeButton from './ReturnHome';  // Ensure to import the component
 
+
+
+
+
+/**
+ * Renders the NotFound component.
+ * 
+ * @returns {JSX.Element} The rendered NotFound component.
+ */
 function NotFound() {
     return (
         <Container maxWidth="sm" style={{ marginTop: '20px', textAlign: 'center' }}>

@@ -1,5 +1,22 @@
 import React from 'react'
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
+
+
+
+
+
+/**
+ * High Scores component.
+
+ * @param {Array}  scores - scores[i].name and scores[i].score to get the scores from the context.
+
+ * @returns {JSX.Element} The rendered game component.
+ *
+
+ */
+
+
+
 const HighScoresTable = ({scores}) => {
    
   return (

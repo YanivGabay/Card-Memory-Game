@@ -3,7 +3,16 @@ import { AppBar, Toolbar, Typography, Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 
+/**
+ * The Header component renders the header of the application.
+ *
 
+ * It contains a title and a button to navigate back to the home page.
+
+ * @returns {JSX.Element} The rendered game component.
+ *
+
+ */
 
 function Header() {
     const navigate = useNavigate();
