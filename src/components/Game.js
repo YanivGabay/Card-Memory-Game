@@ -9,6 +9,16 @@ import { isEveryCardMatched } from '../Utilities';
 import { Box, Typography } from '@mui/material';
 
 
+/**
+ * Represents the memory game component.
+ *
+ * @param {Object} gameSettings - The settings for the game.
+ * @param {string} gameSettings.name - The name of the player.
+ * @param {number} gameSettings.rows - The number of rows in the game board.
+ * @param {number} gameSettings.cols - The number of columns in the game board.
+ * @param {number} gameSettings.flipDelay - The delay (in milliseconds) between card flips.
+ * @returns {JSX.Element} The rendered game component.
+ */
 function Game({ gameSettings }) {
   const { name, rows, cols, flipDelay } = gameSettings;
 
@@ -19,15 +29,29 @@ function Game({ gameSettings }) {
   const [score, setScore] = useState(0);
   const [steps, setSteps] = useState(0);
   const { addScore } = useHighScores();
+  const [flips, setFlips] = useState(0);
 
   const gameOver = isEveryCardMatched(cards);
+
+  function calculateScore(boardRows, boardColumns, steps,  flipDelay) {
+    const numberOfCards = boardRows * boardColumns;
+    const baseScore = 10 * numberOfCards; // Basic score based on number of cards
+    const boardComplexityBonus = 0.5 * numberOfCards; // Bonus for larger boards
+    const flipDelayBonus = 50 / flipDelay; // Bonus increases as flip delay decreases
+    const stepPenalty = 2 * steps; // Penalty for the number of steps
+
+    const score = baseScore + boardComplexityBonus + flipDelayBonus - stepPenalty;
+    return Math.floor(score);
+}
 
 
   
   const handleGameComplete = () => {
     
-    addScore({ name: name, score: score }); // Ensure this function doesn't add duplicates
-
+    const actualScore = calculateScore(rows,cols,steps,flipDelay);
+    setScore(actualScore);
+    addScore({ name: name, score: actualScore }); 
+   
     setTimeout(() => {
       navigate('/highscores');
     }, 2000); // Navigate after a delay to show the game over screen or a message
@@ -56,7 +80,7 @@ function Game({ gameSettings }) {
 
   const matchCards = (flippedCards) => {
     if (flippedCards[0].id === flippedCards[1].id) {
-      setScore(prevScore => prevScore + 1);
+      setFlips(flips + 1);
       const matchedCards = cards.map(card => card.id === flippedCards[0].id ? { ...card, isMatched: true, isFlipped: true } : card);
       setCards(matchedCards);
 
@@ -80,7 +104,7 @@ function Game({ gameSettings }) {
     <Box>
       <Box>
         <Typography variant="h5" align="center" gutterBottom>
-          {`Player: ${name} | Score: ${score} | Steps: ${steps}`}
+          {`Player: ${name} | Flips: ${flips} | Steps: ${steps}`}
         </Typography>
       </Box>
 
@@ -93,6 +117,7 @@ function Game({ gameSettings }) {
 
         {gameOver && <GameFinished score={score} />}
       </Grid>
+
     </Box>
   );
 }

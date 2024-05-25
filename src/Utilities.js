@@ -1,5 +1,8 @@
 
 
+
+
+
 export const validateBoard = ({ rows, cols }) => {
   const totalCards = rows * cols;
   return totalCards % 2 !== 0 ? 'The combination of rows and columns must result in an even number of cards.' : null;
