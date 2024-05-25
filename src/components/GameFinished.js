@@ -2,6 +2,9 @@ import React from 'react';
 import { Typography, Grid, Paper, Button } from '@mui/material';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
+
+
+
 export default function GameFinished({ score }) {
   return (
     <Grid container justifyContent="center" alignItems="center" style={{ marginTop: 20 }}>

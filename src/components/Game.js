@@ -18,6 +18,8 @@ import ReturnHome from './ReturnHome';
  * @param {number} gameSettings.cols - The number of columns in the game board.
  * @param {number} gameSettings.flipDelay - The delay (in milliseconds) between card flips.
  * @returns {JSX.Element} The rendered game component.
+ *
+
  */
 function Game({ gameSettings }) {
   const { name, rows, cols, flipDelay } = gameSettings;
@@ -31,8 +33,10 @@ function Game({ gameSettings }) {
   const { addScore } = useHighScores();
   const [flips, setFlips] = useState(0);
 
+  // Check if all cards are matched ./Utilities.js
   const gameOver = isEveryCardMatched(cards);
 
+  // Calculate the score to add some complexity to the game
   function calculateScore(boardRows, boardColumns, steps,  flipDelay) {
     const numberOfCards = boardRows * boardColumns;
     const baseScore = 10 * numberOfCards; // Basic score based on number of cards
@@ -45,7 +49,7 @@ function Game({ gameSettings }) {
 }
 
 
-  
+  // Handle the game completion
   const handleGameComplete = () => {
     
     const actualScore = calculateScore(rows,cols,steps,flipDelay);
@@ -58,6 +62,7 @@ function Game({ gameSettings }) {
 
   };
 
+
   const handleCardClick = index => {
     if (!canFlip || cards[index].isFlipped || cards[index].isMatched) return;
     setSteps(steps + 1)
@@ -67,7 +72,8 @@ function Game({ gameSettings }) {
 
 
   };
-
+  
+  // Process the flipped cards
   const processCardMatch = (newCards) => {
     const flippedCards = newCards.filter(card => card.isFlipped && !card.isMatched);
     if (flippedCards.length === 2) {
@@ -77,7 +83,7 @@ function Game({ gameSettings }) {
       setCanFlip(true);
     }
   };
-
+  //two cards are flipped
   const matchCards = (flippedCards) => {
     if (flippedCards[0].id === flippedCards[1].id) {
       setFlips(flips + 1);
@@ -95,8 +101,7 @@ function Game({ gameSettings }) {
   };
 
 
-  //console.log(rows, cols, flipDelay);
-  //console.log(cards);
+
 
 
   return (

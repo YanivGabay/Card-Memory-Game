@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Grid, Paper, TextField, Button, Stack } from '@mui/material'
+import { Grid, Paper,  Button, Stack } from '@mui/material'
 import { Alert } from '@mui/material'
 import Settings from './Settings'
 import SpringModal from './SpringModal'
@@ -23,9 +23,7 @@ const GameSettings = () => {
             value = parseInt(value, 10);
         }
         else { value = value.trim() };
-        console.log(e.target.value);
-        console.log(e.target.name);
-        console.log(value);
+      
         setGameSettings({ ...gameSettings, [e.target.name]: value });
     };
 
